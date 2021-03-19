@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
+import { ProductService } from './product.service';
 
 @Component({
   selector: 'pm-products',
   templateUrl: './product-list.component.html',
+  providers: [ProductService],
 })
 export class ProductListComponent implements OnInit {
   pageTitle: string = 'Product List';
@@ -14,13 +16,16 @@ export class ProductListComponent implements OnInit {
   _listFilter: string;
   filteredProducts: IProduct[];
 
-  constructor() {
-    this.filteredProducts = this.products;
-    this.listFilter = 'cart';
-  }
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     console.log('on init');
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+        this.filteredProducts = this.products;
+      },
+    });
   }
 
   get listFilter(): string {
