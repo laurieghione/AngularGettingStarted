@@ -6,7 +6,6 @@ import {
   UrlTree,
   Router,
 } from '@angular/router';
-import { nextTick } from 'node:process';
 import { Observable } from 'rxjs';
 
 @Injectable({
